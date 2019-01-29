@@ -24,7 +24,7 @@
       <td>{{ book.author }}</td>
       <td>{{ book.publication|date("d/m/Y") }}</td>
       <td>{{ book.category.title }}</td>
-      <td><a href="{{ path("librairian_book") }}">Voir</a></td>
+      <td><a href="{{ path("librairian_book", {"id" : book.id}) }}">Voir</a></td>
     </tr>
   {% endfor %}
 </tbody>

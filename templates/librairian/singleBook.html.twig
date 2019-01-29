@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ book.title }}{% endblock %}
+
+{% block pageTitle %}{{ book.title }}{% endblock %}
+
+{% block body %}
+  <p>{{ book.summary }}</p>
+  <span class="badge badge-secondary mr-5 p-2">{{ book.author }}</span>
+  <span class="badge badge-secondary mr-5 p-2">{{ book.publication|date("d/m/Y") }}</span>
+  <span class="badge badge-secondary mr-5 p-2">{{ book.category.title }}</span>
+  <span class="badge badge-secondary mr-5 p-2">{{ book.availability }}</span>
+{% endblock %}

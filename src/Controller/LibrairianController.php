@@ -22,12 +22,12 @@ class LibrairianController extends AbstractController
     }
 
     /**
-     * @Route("/librairian/book", name="librairian_book")
+     * @Route("/librairian/book/{id}", name="librairian_book")
      */
-    public function singleBook()
+    public function singleBook(Book $book)
     {
-        return $this->render('librairian/index.html.twig', [
-            'controller_name' => 'LibrairianController',
+        return $this->render('librairian/singleBook.html.twig', [
+            'book' => $book,
         ]);
     }
 
