@@ -42,7 +42,7 @@ class Book
     private $availability;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Category", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;

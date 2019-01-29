@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Book;
+use App\Form\BookType;
 
 class LibrairianController extends AbstractController
 {
@@ -40,9 +43,19 @@ class LibrairianController extends AbstractController
     /**
      * @Route("/librairian/new/book", name="librairian_new_book")
      */
-    public function newBook()
+    public function newBook(Request $request)
     {
+      $book = new Book();
+      $form = $this->createForm(BookType::class, $book);
+      $form->handleRequest($request);
+      if($form->isSubmitted() && $form->isValid()) {
+        $book = $form->getData();
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($book);
+        $em->flush();
+      }
         return $this->render('librairian/newBook.html.twig', [
+          "form" => $form->createView()
         ]);
     }
 }
