@@ -9,5 +9,9 @@
   <span class="badge badge-secondary mr-5 p-2">{{ book.author }}</span>
   <span class="badge badge-secondary mr-5 p-2">{{ book.publication|date("d/m/Y") }}</span>
   <span class="badge badge-secondary mr-5 p-2">{{ book.category.title }}</span>
-  <span class="badge badge-secondary mr-5 p-2">{{ book.availability }}</span>
+  {% if book.availability %}
+    <span class="badge badge-success mr-5 p-2">Disponible</span>
+  {% else %}
+    <span class="badge badge-danger mr-5 p-2">Indisponible</span>  
+  {% endif %}
 {% endblock %}

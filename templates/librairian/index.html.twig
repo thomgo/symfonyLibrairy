@@ -13,6 +13,7 @@
     <th scope="col">Auteur</th>
     <th scope="col">Parution</th>
     <th scope="col">Catégorie</th>
+    <th scope="col">Disponibilité</th>
     <th scope="col">Actions</th>
   </tr>
 </thead>
@@ -24,6 +25,13 @@
       <td>{{ book.author }}</td>
       <td>{{ book.publication|date("d/m/Y") }}</td>
       <td>{{ book.category.title }}</td>
+      <td>
+        {% if book.availability %}
+          <span class="badge badge-success mr-5 p-2">Disponible</span>
+        {% else %}
+          <span class="badge badge-danger mr-5 p-2">Indisponible</span>
+        {% endif %}
+      </td>
       <td><a href="{{ path("librairian_book", {"id" : book.id}) }}">Voir</a></td>
     </tr>
   {% endfor %}
