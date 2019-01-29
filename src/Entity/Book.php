@@ -47,6 +47,11 @@ class Book
      */
     private $category;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="books")
+     */
+    private $borrower;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +125,18 @@ class Book
     public function setCategory(Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getBorrower(): ?User
+    {
+        return $this->borrower;
+    }
+
+    public function setBorrower(?User $borrower): self
+    {
+        $this->borrower = $borrower;
 
         return $this;
     }

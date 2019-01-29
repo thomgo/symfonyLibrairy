@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilisateurs{% endblock %}
+
+{% block pageTitle %}Utilisateurs enregistrés{% endblock %}
+
+{% block body %}
+<table class="table">
+<thead>
+  <tr>
+    <th scope="col">Id</th>
+    <th scope="col">Nom</th>
+    <th scope="col">Ville</th>
+    <th scope="col">Email</th>
+    <th scope="col">Actions</th>
+  </tr>
+</thead>
+<tbody>
+  {% for user in users %}
+    <tr>
+      <td>{{ user.id }}</td>
+      <td>{{ user.firstName }}</td>
+      <td>{{ user.city }}</td>
+      <td>{{ user.email }}</td>
+      <td><a href="{{ path("librairian_user", {"id" : user.id}) }}">Voir</a></td>
+    </tr>
+  {% endfor %}
+</tbody>
+</table>
+{% endblock %}

@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Book;
+use App\Entity\User;
 use App\Form\BookType;
 
 class LibrairianController extends AbstractController
@@ -36,10 +37,22 @@ class LibrairianController extends AbstractController
      */
     public function users()
     {
-        return $this->render('librairian/index.html.twig', [
-            'controller_name' => 'LibrairianController',
-        ]);
+      $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+      return $this->render('librairian/users.html.twig', [
+          'users' => $users,
+      ]);
     }
+
+
+        /**
+         * @Route("/librairian/user/{id}", name="librairian_user")
+         */
+        public function singleUser(User $user)
+        {
+            return $this->render('librairian/singleUser.html.twig', [
+                'user' => $user,
+            ]);
+        }
 
     /**
      * @Route("/librairian/new/book", name="librairian_new_book")
