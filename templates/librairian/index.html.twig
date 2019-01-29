@@ -5,5 +5,28 @@
 {% block pageTitle %}Livres au catalogue{% endblock %}
 
 {% block body %}
-
+<table class="table">
+<thead>
+  <tr>
+    <th scope="col">Id</th>
+    <th scope="col">Titre</th>
+    <th scope="col">Auteur</th>
+    <th scope="col">Parution</th>
+    <th scope="col">Catégorie</th>
+    <th scope="col">Actions</th>
+  </tr>
+</thead>
+<tbody>
+  {% for book in books %}
+    <tr>
+      <td>{{ book.id }}</td>
+      <td>{{ book.title }}</td>
+      <td>{{ book.author }}</td>
+      <td>{{ book.publication|date("d/m/Y") }}</td>
+      <td>{{ book.category.title }}</td>
+      <td><a href="{{ path("librairian_book") }}">Voir</a></td>
+    </tr>
+  {% endfor %}
+</tbody>
+</table>
 {% endblock %}

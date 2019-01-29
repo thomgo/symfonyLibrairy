@@ -15,8 +15,9 @@ class LibrairianController extends AbstractController
      */
     public function index()
     {
+        $books = $this->getDoctrine()->getRepository(Book::class)->findBooksAndCategory();
         return $this->render('librairian/index.html.twig', [
-            'controller_name' => 'LibrairianController',
+            'books' => $books,
         ]);
     }
 
