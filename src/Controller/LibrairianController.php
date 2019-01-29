@@ -42,8 +42,7 @@ class LibrairianController extends AbstractController
      */
     public function newBook()
     {
-        return $this->render('librairian/index.html.twig', [
-            'controller_name' => 'LibrairianController',
+        return $this->render('librairian/newBook.html.twig', [
         ]);
     }
 }
