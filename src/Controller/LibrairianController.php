@@ -27,8 +27,12 @@ class LibrairianController extends AbstractController
     /**
      * @Route("/librairian/book/{id}", name="librairian_book")
      */
-    public function singleBook(Book $book, Request $request)
+    public function singleBook($id, Request $request)
     {
+        $book = $this->getDoctrine()->getRepository(Book::class)->findBookAndUser($id);
+        if(!$book) {
+          throw $this->createNotFoundException("Ce livre n'existe pas");
+        }
         $form = $this->createForm(BorrowType::class);
         $form->handleRequest($request);
 

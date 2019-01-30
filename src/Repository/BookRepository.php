@@ -28,6 +28,17 @@ class BookRepository extends ServiceEntityRepository
         ->getResult();
     }
 
+    public function findBookAndUser(int $id): ?Book
+    {
+      return $this->createQueryBuilder('b')
+        ->addSelect('u')
+        ->leftJoin('b.borrower', 'u')
+        ->andWhere('b.id = :id')
+        ->setParameter('id', $id)
+        ->getQuery()
+        ->getOneOrNullResult();
+    }
+
     // /**
     //  * @return Book[] Returns an array of Book objects
     //  */

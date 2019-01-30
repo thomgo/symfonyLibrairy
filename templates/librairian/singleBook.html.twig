@@ -5,6 +5,10 @@
 {% block pageTitle %}{{ book.title }}{% endblock %}
 
 {% block body %}
+  {% if book.borrower %}
+    <p class="italic">Livre emprunté par autoescape <a href="{{path("librairian_user", {"id" : book.borrower.id})}}">{{book.borrower.firstName}} {{book.borrower.lastName}}</a></p>
+  {% endif %}
+  
   {% for label, messages in app.flashes %}
     {% for message in messages %}
         <div class="alert alert-{{ label }}">
