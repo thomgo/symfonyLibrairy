@@ -13,15 +13,17 @@ class BorrowType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('code', TextType::class)
-            ->add("Emprunter", SubmitType::class)
-        ;
+            ->add('code', TextType::class, [
+            'attr' => ['placeholder' => 'Le code emprunteur'],            ])
+            ->add("Emprunter", SubmitType::class, [
+            'attr' => ['class' => 'btn btn-success mx-3'],
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            // Configure your form options here
+          'attr' => ['class' => 'form-inline my-3']
         ]);
     }
 }

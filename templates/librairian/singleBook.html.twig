@@ -19,7 +19,10 @@
   <span class="badge badge-secondary mr-5 p-2">{{ book.category.title }}</span>
   {% if book.availability %}
     <span class="badge badge-success mr-5 p-2">Disponible</span>
-    {{ form(form) }}
+    {{ form_start(form) }}
+        {{ form_widget(form.code) }}
+        {{ form_widget(form.Emprunter) }}
+    {{ form_end(form) }}
   {% else %}
     <span class="badge badge-danger mr-5 p-2">Indisponible</span>
     <a href="{{ path("librairian_book_back", {"id" : book.id})}}" class="btn btn-success">Retour livre</a>
