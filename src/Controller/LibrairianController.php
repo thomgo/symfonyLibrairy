@@ -36,13 +36,15 @@ class LibrairianController extends AbstractController
           $data = $form->getData();
           $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(["code" => $data["code"]]);
           if(!$user) {
-            throw $this->createNotFoundException("Ce code utilisateur n'existe pas");
+            $this->addFlash("danger", "Ce code utilisateur n'est pas valide");
           }
-          $book->setBorrower($user);
-          $entityManager = $this->getDoctrine()->getManager();
-          $entityManager->persist($book);
-          $entityManager->flush();
-          $this->addFlash("success", "Le livre a été emprunté");
+          else {
+            $book->setBorrower($user);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($book);
+            $entityManager->flush();
+            $this->addFlash("success", "Le livre a été emprunté");
+          }
         }
 
         return $this->render('librairian/singleBook.html.twig', [
@@ -57,13 +59,15 @@ class LibrairianController extends AbstractController
     public function bookBack(Book $book)
     {
       if($book->getAvailability()) {
-        throw $this->createNotFoundException("Ce livre n'a jamais été emprunté");
+        $this->addFlash("danger", "Ce livre n'a jamais été emprunté");
       }
-      $book->setBorrower(null);
-      $entityManager = $this->getDoctrine()->getManager();
-      $entityManager->persist($book);
-      $entityManager->flush();
-      $this->addFlash("success", "Le livre a été rendu");
+      else {
+        $book->setBorrower(null);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($book);
+        $entityManager->flush();
+        $this->addFlash("success", "Le livre a été rendu");
+      }
       return $this->redirectToRoute('librairian_book', ["id" => $book->getId()]);
     }
 

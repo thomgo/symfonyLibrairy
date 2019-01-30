@@ -5,11 +5,14 @@
 {% block pageTitle %}{{ book.title }}{% endblock %}
 
 {% block body %}
-  {% for message in app.flashes('success') %}
-      <div class="alert alert-success">
-          {{ message }}
-      </div>
+  {% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert alert-{{ label }}">
+            {{ message }}
+        </div>
+    {% endfor %}
   {% endfor %}
+
   <p>{{ book.summary }}</p>
   <span class="badge badge-secondary mr-5 p-2">{{ book.author }}</span>
   <span class="badge badge-secondary mr-5 p-2">{{ book.publication|date("d/m/Y") }}</span>
