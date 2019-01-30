@@ -137,7 +137,12 @@ class Book
     public function setBorrower(?User $borrower): self
     {
         $this->borrower = $borrower;
-
+        if($borrower) {
+          $this->setAvailability(0);
+        }
+        else {
+          $this->setAvailability(1);
+        }
         return $this;
     }
 }
