@@ -5,6 +5,10 @@
 {% block pageTitle %}Livres au catalogue{% endblock %}
 
 {% block body %}
+{{ form_start(form, {'action': path('librairian_sort')}) }}
+    {{ form_widget(form.category) }}
+    {{ form_widget(form.Rechercher) }}
+{{ form_end(form) }}
 <table class="table">
 <thead>
   <tr>

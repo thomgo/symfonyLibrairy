@@ -2,8 +2,21 @@
 
 {% block title %}{{ user.firstName }}{% endblock %}
 
-{% block pageTitle %}{{ user.firstName }}{% endblock %}
+{% block pageTitle %}{{ user.firstName }} {{ user.lastName }}{% endblock %}
 
 {% block body %}
-
+  <h3>Fiche d'identité</h3>
+  <ul>
+    <li>Nom : {{user.lastName}} </li>
+    <li>Prénom : {{user.firstName}} </li>
+    <li>Email : {{user.email}} </li>
+    <li>Ville : {{user.city}} </li>
+    <li>Code emprunteur : {{user.code}}</li>
+  </ul>
+  <h3>Livres empruntés</h3>
+  <ul>
+    {% for book in user.books %}
+      <li><a href="{{path("librairian_book", {"id" : book.id})}}">{{ book.title}}</a></li>
+    {% endfor %}
+  </ul>
 {% endblock %}

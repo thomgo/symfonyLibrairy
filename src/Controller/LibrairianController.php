@@ -10,6 +10,7 @@ use App\Entity\Book;
 use App\Entity\User;
 use App\Form\BookType;
 use App\Form\BorrowType;
+use App\Form\SortBookType;
 
 class LibrairianController extends AbstractController
 {
@@ -19,8 +20,32 @@ class LibrairianController extends AbstractController
     public function index()
     {
         $books = $this->getDoctrine()->getRepository(Book::class)->findBooksAndCategory();
+        $form = $this->createForm(SortBookType::class);
         return $this->render('librairian/index.html.twig', [
             'books' => $books,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/librairian/sort", name="librairian_sort")
+     */
+    public function bookSort(Request $request)
+    {
+        $form = $this->createForm(SortBookType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+          $category = $form->getData()["category"];
+          $books = $this->getDoctrine()->getRepository(Book::class)->findBooksAndCategory($category);
+        }
+        else {
+          $books = $this->getDoctrine()->getRepository(Book::class)->findBooksAndCategory();
+        }
+
+        return $this->render('librairian/index.html.twig', [
+            'books' => $books,
+            'form' => $form->createView()
         ]);
     }
 
@@ -91,8 +116,12 @@ class LibrairianController extends AbstractController
         /**
          * @Route("/librairian/user/{id}", name="librairian_user")
          */
-        public function singleUser(User $user)
+        public function singleUser($id)
         {
+          $user = $this->getDoctrine()->getRepository(User::class)->findUserAndBooks($id);
+          if(!$user) {
+            throw $this->createNotFoundException("Cet utilisateur n'existe pas");
+          }
             return $this->render('librairian/singleUser.html.twig', [
                 'user' => $user,
             ]);
