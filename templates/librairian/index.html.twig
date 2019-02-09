@@ -5,7 +5,7 @@
 {% block pageTitle %}Livres au catalogue{% endblock %}
 
 {% block body %}
-{{ form_start(form, {'action': path('librairian_sort')}) }}
+{{ form_start(form, {'action': path('librairian_sort', {"page" : 1})}) }}
     {{ form_widget(form.category) }}
     {{ form_widget(form.Rechercher) }}
 {{ form_end(form) }}
@@ -41,4 +41,5 @@
   {% endfor %}
 </tbody>
 </table>
+{% include "pagination.html.twig" %}
 {% endblock %}

@@ -6,6 +6,7 @@ use App\Entity\Book;
 use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @method Book|null find($id, $lockMode = null, $lockVersion = null)
@@ -20,7 +21,7 @@ class BookRepository extends ServiceEntityRepository
         parent::__construct($registry, Book::class);
     }
 
-    public function findBooksAndCategory(Category $category = null)
+    public function findBooksAndCategory($max, Category $category = null)
     {
       $request = $this->createQueryBuilder('b')
         ->addSelect('c')
@@ -28,7 +29,9 @@ class BookRepository extends ServiceEntityRepository
       if($category) {
         $request = $request->andWhere('c.id = :id')->setParameter('id', $category->getId());
       }
-        return $request->getQuery()
+        return $request->setFirstResult($max - 10)
+        ->setMaxResults($max)
+        ->getQuery()
         ->getResult();
     }
 

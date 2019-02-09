@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Book;
 use App\Entity\User;
@@ -16,37 +17,48 @@ use App\Form\SortBookType;
 class LibrairianController extends AbstractController
 {
     /**
-     * @Route("/librairian", name="librairian")
+     * @Route("/librairian/{page}", name="librairian", requirements={"page"="\d+"})
      */
-    public function index()
+    public function index(Request $request, $page = 1)
     {
-        $books = $this->getDoctrine()->getRepository(Book::class)->findBooksAndCategory();
+        $nextUrl = $this->generateUrl($request->get("_route"), ['page' => $page + 1]);
+        $previousUrl = $this->generateUrl($request->get("_route"), ['page' => $page - 1]);
+        $max = $page * 10 ;
+        $books = $this->getDoctrine()->getRepository(Book::class)->findBooksAndCategory($max);
         $form = $this->createForm(SortBookType::class);
         return $this->render('librairian/index.html.twig', [
             'books' => $books,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            "nextUrl" => $nextUrl,
+            "previousUrl" => $previousUrl
         ]);
     }
 
     /**
-     * @Route("/librairian/sort", name="librairian_sort")
+     * @Route("/librairian/sort/{page}", name="librairian_sort", requirements={"page"="\d+"})
      */
-    public function bookSort(Request $request)
+    public function bookSort(Request $request, SessionInterface $session, $page = 1)
     {
+      $nextUrl = $this->generateUrl($request->get("_route"), ['page' => $page + 1]);
+      $previousUrl = $this->generateUrl($request->get("_route"), ['page' => $page - 1]);
+      $max = $page * 10 ;
         $form = $this->createForm(SortBookType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
           $category = $form->getData()["category"];
-          $books = $this->getDoctrine()->getRepository(Book::class)->findBooksAndCategory($category);
+          $session->set('category', $category);
+          $books = $this->getDoctrine()->getRepository(Book::class)->findBooksAndCategory($max, $session->get("category"));
         }
         else {
-          $books = $this->getDoctrine()->getRepository(Book::class)->findBooksAndCategory();
+          $books = $this->getDoctrine()->getRepository(Book::class)->findBooksAndCategory($max, $session->get("category"));
         }
 
         return $this->render('librairian/index.html.twig', [
             'books' => $books,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            "nextUrl" => $nextUrl,
+            "previousUrl" => $previousUrl
         ]);
     }
 
@@ -79,7 +91,7 @@ class LibrairianController extends AbstractController
 
         return $this->render('librairian/singleBook.html.twig', [
             'book' => $book,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
