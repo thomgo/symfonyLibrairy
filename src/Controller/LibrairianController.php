@@ -12,6 +12,7 @@ use App\Entity\User;
 use App\Form\BookType;
 use App\Form\BorrowType;
 use App\Form\SortBookType;
+use App\Service\Pagination;
 
 
 class LibrairianController extends AbstractController
@@ -19,46 +20,38 @@ class LibrairianController extends AbstractController
     /**
      * @Route("/librairian/{page}", name="librairian", requirements={"page"="\d+"})
      */
-    public function index(Request $request, $page = 1)
+    public function index(Request $request, Pagination $pagination, $page = 1)
     {
-        $nextUrl = $this->generateUrl($request->get("_route"), ['page' => $page + 1]);
-        $previousUrl = $this->generateUrl($request->get("_route"), ['page' => $page - 1]);
-        $max = $page * 10 ;
-        $books = $this->getDoctrine()->getRepository(Book::class)->findBooksAndCategory($max);
+        $pagination->makePage($request->get("_route"), $page);
+
         $form = $this->createForm(SortBookType::class);
         return $this->render('librairian/index.html.twig', [
-            'books' => $books,
+            'books' => $pagination->getResult(),
             'form' => $form->createView(),
-            "nextUrl" => $nextUrl,
-            "previousUrl" => $previousUrl
+            "nextUrl" => $pagination->getNextUrl(),
+            "previousUrl" => $pagination->getPreviousUrl()
         ]);
     }
 
     /**
      * @Route("/librairian/sort/{page}", name="librairian_sort", requirements={"page"="\d+"})
      */
-    public function bookSort(Request $request, SessionInterface $session, $page = 1)
+    public function bookSort(Request $request, SessionInterface $session, Pagination $pagination, $page = 1)
     {
-      $nextUrl = $this->generateUrl($request->get("_route"), ['page' => $page + 1]);
-      $previousUrl = $this->generateUrl($request->get("_route"), ['page' => $page - 1]);
-      $max = $page * 10 ;
         $form = $this->createForm(SortBookType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
           $category = $form->getData()["category"];
           $session->set('category', $category);
-          $books = $this->getDoctrine()->getRepository(Book::class)->findBooksAndCategory($max, $session->get("category"));
         }
-        else {
-          $books = $this->getDoctrine()->getRepository(Book::class)->findBooksAndCategory($max, $session->get("category"));
-        }
+        $pagination->makePage($request->get("_route"), $page, $session->get("category"));
 
         return $this->render('librairian/index.html.twig', [
-            'books' => $books,
+            'books' => $pagination->getResult(),
             'form' => $form->createView(),
-            "nextUrl" => $nextUrl,
-            "previousUrl" => $previousUrl
+            "nextUrl" => $pagination->getNextUrl(),
+            "previousUrl" => $pagination->getPreviousUrl()
         ]);
     }
 

@@ -21,7 +21,7 @@ class BookRepository extends ServiceEntityRepository
         parent::__construct($registry, Book::class);
     }
 
-    public function findBooksAndCategory($max, Category $category = null)
+    public function findBooksAndCategory($min, $max, Category $category = null)
     {
       $request = $this->createQueryBuilder('b')
         ->addSelect('c')
@@ -29,7 +29,7 @@ class BookRepository extends ServiceEntityRepository
       if($category) {
         $request = $request->andWhere('c.id = :id')->setParameter('id', $category->getId());
       }
-        return $request->setFirstResult($max - 10)
+        return $request->setFirstResult($min)
         ->setMaxResults($max)
         ->getQuery()
         ->getResult();
