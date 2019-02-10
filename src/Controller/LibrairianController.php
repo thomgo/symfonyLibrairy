@@ -7,6 +7,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Entity\Book;
 use App\Entity\User;
 use App\Form\BookType;
@@ -14,7 +15,9 @@ use App\Form\BorrowType;
 use App\Form\SortBookType;
 use App\Service\Pagination;
 
-
+ /**
+  * @IsGranted("ROLE_LIBRAIRIAN")
+  */
 class LibrairianController extends AbstractController
 {
     /**
