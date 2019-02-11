@@ -35,13 +35,11 @@ class LibrairianController extends AbstractController
         $form = $this->createForm(SortBookType::class);
         $form->handleRequest($request);
 
+        $category = null;
         if ($form->isSubmitted() && $form->isValid()) {
           $category = $form->getData()["category"];
-          $books = $this->getDoctrine()->getRepository(Book::class)->findBooksAndCategory($category);
         }
-        else {
-          $books = $this->getDoctrine()->getRepository(Book::class)->findBooksAndCategory();
-        }
+        $books = $this->getDoctrine()->getRepository(Book::class)->findBooksAndCategory($category);
 
         return $this->render('librairian/index.html.twig', [
             'books' => $books,
