@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherche{% endblock %}
+
+{% block pageTitle %}Cherchez un livre dans une bibliothèque{% endblock %}
+
+{% block body %}
+{{ form_start(form) }}
+    {{ form_widget(form.title) }}
+    {{ form_widget(form.Rechercher) }}
+{{ form_end(form) }}
+{% if books %}
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Titre</th>
+      <th scope="col">Auteur</th>
+      <th scope="col">Parution</th>
+      <th scope="col">Catégorie</th>
+      <th scope="col">Disponibilité</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for book in books %}
+      <tr>
+        <td>{{ book.id }}</td>
+        <td>{{ book.title }}</td>
+        <td>{{ book.author }}</td>
+        <td>{{ book.publication|date("d/m/Y") }}</td>
+        <td>{{ book.category.title }}</td>
+        <td>
+          {% if book.availability %}
+            <span class="badge badge-success mr-5 p-2">Disponible</span>
+          {% else %}
+            <span class="badge badge-danger mr-5 p-2">Indisponible</span>
+          {% endif %}
+        </td>
+        <td><a href="{{ path("librairian_book", {"id" : book.id}) }}">Voir</a></td>
+      </tr>
+    {% endfor %}
+  </tbody>
+  </table>
+{% else %}
+  <p>Nous n'avons pas trouvé de livres</p>
+{% endif %}
+
+{% endblock %}

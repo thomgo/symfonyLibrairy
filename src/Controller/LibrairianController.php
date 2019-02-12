@@ -13,6 +13,7 @@ use App\Entity\User;
 use App\Form\BookType;
 use App\Form\BorrowType;
 use App\Form\SortBookType;
+use App\Form\SearchBookType;
 use App\Service\Pagination;
 
  /**
@@ -152,6 +153,25 @@ class LibrairianController extends AbstractController
       }
         return $this->render('librairian/newBook.html.twig', [
           "form" => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/librairian/search", name="librairian_search")
+     */
+    public function searchBook(Request $request)
+    {
+        $books = null;
+        $form = $this->createForm(SearchBookType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+          $bookTitle = $form->getData()["title"];
+          $books = $this->getDoctrine()->getManager()->getRepository(Book::class)->findBy(["title" => $bookTitle]);
+        }
+        return $this->render('librairian/search.html.twig', [
+            'books' => $books,
+            'form' => $form->createView(),
         ]);
     }
 }
