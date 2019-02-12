@@ -8,6 +8,7 @@ use App\DataFixtures\CategoryFixtures;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use App\Entity\Book;
 use App\Entity\Category;
+use App\Entity\Librairy;
 use Faker;
 
 class BookFixtures extends Fixture implements DependentFixtureInterface
@@ -24,6 +25,8 @@ class BookFixtures extends Fixture implements DependentFixtureInterface
         $book->setAvailability(1);
         $random = mt_rand(0,9);
         $book->setCategory($this->getReference("category$random"));
+        $random = mt_rand(0,3);
+        $book->setLibrairy($this->getReference("librairy$random"));
         $manager->persist($book);
       }
 
@@ -34,6 +37,7 @@ class BookFixtures extends Fixture implements DependentFixtureInterface
     {
         return array(
             CategoryFixtures::class,
+            LibrairyFixtures::class,
         );
     }
 }
