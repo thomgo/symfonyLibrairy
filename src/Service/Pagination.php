@@ -4,12 +4,14 @@ namespace App\Service;
 
 use App\Repository\BookRepository;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Security;
 
 
 class Pagination
 {
     private $repository;
     private $urlGenerator;
+    private $security;
 
     private $nextUrl;
     private $previousUrl;
@@ -58,7 +60,8 @@ class Pagination
       $this->setPages($category);
       $this->makeUrls($route, $page);
       $this->makeRange($page);
-      $this->result = $this->repository->findBooksAndCategory($this->min, $this->max, $category);
+      $user = $this->security->getUser();
+      $this->result = $this->repository->findBooksAndCategory($this->min, $this->max, $user, $category);
     }
 
     public function getResult() {
@@ -73,8 +76,9 @@ class Pagination
       return $this->previousUrl;
     }
 
-    public function __construct(BookRepository $repository, UrlGeneratorInterface $urlGenerator) {
+    public function __construct(BookRepository $repository, UrlGeneratorInterface $urlGenerator, Security $security) {
       $this->repository = $repository;
       $this->urlGenerator = $urlGenerator;
+      $this->security = $security;
     }
 }
