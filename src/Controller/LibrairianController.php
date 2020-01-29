@@ -22,6 +22,7 @@ use App\Service\Pagination;
 class LibrairianController extends AbstractController
 {
     /**
+     * @Route("/")
      * @Route("/librairian/{page}", name="librairian", requirements={"page"="\d+"})
      */
     public function index(Request $request, Pagination $pagination, $page = 1)
