@@ -5,18 +5,30 @@
 {% block pageTitle %}{{ user.firstName }} {{ user.lastName }}{% endblock %}
 
 {% block body %}
-  <h3>Fiche d'identité</h3>
-  <ul>
-    <li>Nom : {{user.lastName}} </li>
-    <li>Prénom : {{user.firstName}} </li>
-    <li>Email : {{user.email}} </li>
-    <li>Ville : {{user.city}} </li>
-    <li>Code emprunteur : {{user.code}}</li>
-  </ul>
-  <h3>Livres empruntés</h3>
-  <ul>
-    {% for book in user.books %}
-      <li><a href="{{path("librairian_book", {"id" : book.id})}}">{{ book.title}}</a></li>
-    {% endfor %}
-  </ul>
+<div class="row">
+  <div class="col-md-6">
+    <ul class="list-group my-2">
+      <li class="list-group-item main-bg text-white"><h3>Fiche d'identité</h3></li>
+      <li class="list-group-item">Nom : {{user.lastName}} </li>
+      <li class="list-group-item">Prénom : {{user.firstName}} </li>
+      <li class="list-group-item">Email : {{user.email}} </li>
+      <li class="list-group-item">Ville : {{user.city}} </li>
+      <li class="list-group-item">Code emprunteur : {{user.code}}</li>
+    </ul>
+  </div>
+  <div class="col-md-6">
+    <ul class="list-group my-2">
+      <li class="list-group-item main-bg text-white"><h3>Livres empruntés</h3></li>
+      {% if user.books is empty %}
+        <li class="list-group-item">Pas de livres empruntés</li>
+      {% else %}
+        {% for book in user.books %}
+        <li class="list-group-item main-bg text-white">
+          <a href="{{path("librairian_book", {"id" : book.id})}}">{{ book.title}}</a>
+        </li>
+        {% endfor %}
+      {% endif %}
+    </ul>
+  </div>
+</div>
 {% endblock %}

@@ -124,19 +124,19 @@ class LibrairianController extends AbstractController
     }
 
 
-        /**
-         * @Route("/librairian/user/{id}", name="librairian_user")
-         */
-        public function singleUser($id)
-        {
-          $user = $this->getDoctrine()->getRepository(User::class)->findUserAndBooks($id);
-          if(!$user) {
-            throw $this->createNotFoundException("Cet utilisateur n'existe pas");
-          }
-            return $this->render('librairian/singleUser.html.twig', [
-                'user' => $user,
-            ]);
-        }
+    /**
+     * @Route("/librairian/user/{id}", name="librairian_user")
+     */
+    public function singleUser($id)
+    {
+      $user = $this->getDoctrine()->getRepository(User::class)->findUserAndBooks($id);
+      if(!$user) {
+        throw $this->createNotFoundException("Cet utilisateur n'existe pas");
+      }
+        return $this->render('librairian/singleUser.html.twig', [
+            'user' => $user,
+        ]);
+    }
 
     /**
      * @Route("/librairian/new/book", name="librairian_new_book")
