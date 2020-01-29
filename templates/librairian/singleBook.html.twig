@@ -21,6 +21,7 @@
   <span class="badge badge-secondary mr-5 p-2">{{ book.author }}</span>
   <span class="badge badge-secondary mr-5 p-2">{{ book.publication|date("d/m/Y") }}</span>
   <span class="badge badge-secondary mr-5 p-2">{{ book.category.title }}</span>
+  <span class="badge badge-secondary mr-5 p-2">{{ book.librairy.name }}</span>
   {% if book.availability %}
     <span class="badge sec-bg mr-5 p-2">Disponible</span>
     {{ form_start(form) }}
