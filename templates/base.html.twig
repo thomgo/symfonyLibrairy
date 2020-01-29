@@ -9,13 +9,7 @@
         {% endblock %}
     </head>
     <body>
-      <div class="jumbotron jumbotron-fluid my-0">
-        <div class="container">
-          <h1 class="display-4">Ex Libris</h1>
-          <p class="lead">Application de gestions des fonds de bibliothèques</p>
-        </div>
-      </div>
-
+      {{ include('header.html.twig') }}
       {{ include('nav.html.twig') }}
 
       <main class="container my-5">
@@ -27,10 +21,6 @@
           <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
         {% endblock %}
       </main>
-      <div class="jumbotron jumbotron-fluid mb-0">
-        <div class="container">
-          <p class="lead">Pour que les livres continuent de s'échanger et de vivre</p>
-        </div>
-      </div>
+      {{ include('footer.html.twig') }}
     </body>
 </html>

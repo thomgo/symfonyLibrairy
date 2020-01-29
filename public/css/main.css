@@ -1,4 +1,22 @@
+/* Utility classes */
 
+/* green: 91c499 */
+/* dark : 595959 */
+
+.main-bg {
+  background-color: #595959;
+}
+
+.sec-bg {
+  background-color: #26a96c;
+  color: white;
+}
+
+/* Genrale rules */
+
+.sec-bg a {
+  color: white;
+}
 
 /* Tablets */
 @media only screen and (min-width: 768px) {
