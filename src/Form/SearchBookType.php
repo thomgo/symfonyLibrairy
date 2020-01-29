@@ -16,7 +16,7 @@ class SearchBookType extends AbstractType
             ->add('title', TextType::class, [
             'attr' => ['placeholder' => 'Le titre recherché'],            ])
             ->add("Rechercher", SubmitType::class, [
-            'attr' => ['class' => 'btn btn-success mx-3'],
+            'attr' => ['class' => 'btn sec-bg mx-3'],
         ]);
     }
 

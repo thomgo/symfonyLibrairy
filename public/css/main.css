@@ -18,6 +18,10 @@
   color: white;
 }
 
+.nav a {
+  font-weight: bold;
+}
+
 /* Tablets */
 @media only screen and (min-width: 768px) {
   .form-container {

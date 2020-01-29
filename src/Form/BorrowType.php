@@ -16,7 +16,7 @@ class BorrowType extends AbstractType
             ->add('code', TextType::class, [
             'attr' => ['placeholder' => 'Le code emprunteur'],            ])
             ->add("Emprunter", SubmitType::class, [
-            'attr' => ['class' => 'btn btn-success mx-3'],
+            'attr' => ['class' => 'btn sec-bg mx-3'],
         ]);
     }
 

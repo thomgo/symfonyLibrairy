@@ -20,7 +20,7 @@ class SortBookType extends AbstractType
           'attr' => ['class' => 'form-control']
         ])
         ->add("Rechercher", SubmitType::class, [
-          'attr' => ['class' => 'btn btn-success mx-2']
+          'attr' => ['class' => 'btn sec-bg mx-2']
         ])
         ;
     }

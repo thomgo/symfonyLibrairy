@@ -42,7 +42,7 @@ class BookType extends AbstractType
               'attr' => ['class' => 'form-control']
             ])
             ->add("Enregistrer", SubmitType::class, [
-              'attr' => ['class' => 'btn btn-success']
+              'attr' => ['class' => 'btn sec-bg']
             ])
         ;
     }
