@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+  <div class="form-container mx-auto">
+    <form method="post">
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        <div class="text-center">
+          <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
+          <p>Merci de vous connecter pour accéder à l'application</p>
+        </div>
+        <label for="inputEmail">Email :</label>
+        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control my-2" required autofocus>
+        <label for="inputPassword">Mot de passe :</label>
+        <input type="password" name="password" id="inputPassword" class="form-control my-2" required>
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        <div class="text-center">
+          <button class="btn sec-bg mt-2" type="submit">Se connecter</button>
+        </div>
+    </form>
+  </div>
+{% endblock %}

@@ -22,7 +22,7 @@
       <td>{{ user.firstName }}</td>
       <td>{{ user.city }}</td>
       <td>{{ user.email }}</td>
-      <td><a href="{{ path("librairian_user", {"id" : user.id}) }}">Voir</a></td>
+      <td><a class="badge main-bg text-white" href="{{ path("librairian_user", {"id" : user.id}) }}">Voir</a></td>
     </tr>
   {% endfor %}
 </tbody>

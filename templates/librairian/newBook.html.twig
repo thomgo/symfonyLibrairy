@@ -5,27 +5,7 @@
 {% block pageTitle %}Ajouter un livre au catalogue{% endblock %}
 
 {% block body %}
-  {{ form_start(form) }}
-      <div class="form-group">
-        {{ form_row(form.title)}}
-      </div>
-      <div class="form-group">
-        {{ form_row(form.author)}}
-      </div>
-      <div class="form-group">
-        {{ form_row(form.summary)}}
-      </div>
-      <div class="form-group">
-        {{ form_row(form.publication)}}
-      </div>
-      <div class="form-group">
-        {{ form_row(form.availability)}}
-      </div>
-      <div class="form-group">
-        {{ form_row(form.category)}}
-      </div>
-      <div class="form-group">
-        {{ form_row(form.Enregistrer)}}
-      </div>
-  {{ form_end(form) }}
+  <div class="form-container mx-auto">
+    {{ form(form) }}
+  </div>
 {% endblock %}

@@ -60,6 +60,12 @@ class User implements UserInterface
      */
     private $books;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Librairy", inversedBy="users")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $librairy;
+
     public function __construct()
     {
         $this->books = new ArrayCollection();
@@ -218,6 +224,18 @@ class User implements UserInterface
                 $book->setBorrower(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLibrairy(): ?Librairy
+    {
+        return $this->librairy;
+    }
+
+    public function setLibrairy(?Librairy $librairy): self
+    {
+        $this->librairy = $librairy;
 
         return $this;
     }

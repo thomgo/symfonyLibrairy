@@ -5,7 +5,7 @@
 {% block pageTitle %}Livres au catalogue{% endblock %}
 
 {% block body %}
-{{ form_start(form, {'action': path('librairian_sort')}) }}
+{{ form_start(form, {'action': path('librairian_sort', {"page" : 1})}) }}
     {{ form_widget(form.category) }}
     {{ form_widget(form.Rechercher) }}
 {{ form_end(form) }}
@@ -31,14 +31,15 @@
       <td>{{ book.category.title }}</td>
       <td>
         {% if book.availability %}
-          <span class="badge badge-success mr-5 p-2">Disponible</span>
+          <span class="badge sec-bg mr-5 p-2">Disponible</span>
         {% else %}
           <span class="badge badge-danger mr-5 p-2">Indisponible</span>
         {% endif %}
       </td>
-      <td><a href="{{ path("librairian_book", {"id" : book.id}) }}">Voir</a></td>
+      <td><a class="badge main-bg text-white" href="{{ path("librairian_book", {"id" : book.id}) }}">Voir</a></td>
     </tr>
   {% endfor %}
 </tbody>
 </table>
+{% include "pagination.html.twig" %}
 {% endblock %}

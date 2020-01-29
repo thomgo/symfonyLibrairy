@@ -1,7 +1,7 @@
-<nav class="">
+<nav class="sec-bg">
   <ul class="container nav">
     <li class="nav-item">
-      <a class="nav-link active" href="{{ path("librairian")}}">Catalogue</a>
+      <a class="nav-link" href="{{ path("librairian")}}">Catalogue</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="{{ path("librairian_new_book")}}">Ajout livre</a>
@@ -9,5 +9,13 @@
     <li class="nav-item">
       <a class="nav-link" href="{{ path("librairian_users")}}">Utilisateurs</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{ path("librairian_search")}}">Rechercher un livre</a>
+    </li>
+    {% if app.user %}
+      <li class="nav-item float-right">
+        <a class="nav-link" href="{{ path("app_logout")}}">Déconnexion</a>
+      </li>
+    {% endif %}
   </ul>
 </nav>

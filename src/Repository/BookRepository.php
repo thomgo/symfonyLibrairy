@@ -4,8 +4,10 @@ namespace App\Repository;
 
 use App\Entity\Book;
 use App\Entity\Category;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @method Book|null find($id, $lockMode = null, $lockVersion = null)
@@ -20,15 +22,21 @@ class BookRepository extends ServiceEntityRepository
         parent::__construct($registry, Book::class);
     }
 
-    public function findBooksAndCategory(Category $category = null)
+    public function findBooksAndCategory($min, $max, User $user = null, Category $category = null)
     {
       $request = $this->createQueryBuilder('b')
         ->addSelect('c')
         ->leftJoin('b.category', 'c');
-      if($category) {
-        $request = $request->andWhere('c.id = :id')->setParameter('id', $category->getId());
+      if($user) {
+        $request = $request->where('b.librairy = :librairy')->setParameter('librairy', $user->getLibrairy());
       }
-        return $request->getQuery()
+      if($category) {
+        $request = $request->andWhere('b.category = :category')->setParameter('category', $category);
+      }
+        return $request->orderBy('b.id', 'ASC')
+        ->setFirstResult($min)
+        ->setMaxResults($max)
+        ->getQuery()
         ->getResult();
     }
 
