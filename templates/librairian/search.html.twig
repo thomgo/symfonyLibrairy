@@ -37,7 +37,7 @@
             <span class="badge badge-danger mr-5 p-2">Indisponible</span>
           {% endif %}
         </td>
-        <td><a href="{{ path("librairian_book", {"id" : book.id}) }}">Voir</a></td>
+        <td><a  class="badge main-bg text-white" href="{{ path("librairian_book", {"id" : book.id}) }}">Voir</a></td>
       </tr>
     {% endfor %}
   </tbody>
